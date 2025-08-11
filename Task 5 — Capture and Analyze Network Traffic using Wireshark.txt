@@ -1,0 +1,83 @@
+﻿Task 5 — Capture and Analyze Network Traffic using Wireshark
+Student: Syed Mujahed Ali
+Project: Task 5 — Capture and Analyze Network Traffic
+ Tools Used: Windows 11, Wireshark, Command Prompt, Web Browser (Edge/Chrome)
+
+
+Objective
+The purpose of this task was to capture live network traffic using Wireshark over a Wi-Fi interface and analyze the captured packets to identify different network protocols. This exercise aims to develop basic packet analysis skills and understand how various protocols operate on the network.
+Activities and Implementation
+1. Opening Wireshark and Selecting Interface
+I launched Wireshark and identified my active Wi-Fi interface from the interface list. Since my machine was connected via wireless, I selected the Wi-Fi interface for packet capture.
+
+
+2. Starting the Capture and Generating Traffic
+With the Wi-Fi interface selected, I started live packet capture. While capturing, I generated network traffic by:
+* Using Command Prompt to send ICMP packets with ping google.com.
+
+* Performing a DNS query via nslookup google.com.
+
+These actions ensured that multiple protocols (DNS, TLS, ICMP, TCP, ARP) would be captured.
+3. Stopping and Saving the Capture
+After around one minute, I stopped the capture using the red square button in Wireshark. I then saved the capture file as task5_capture.pcapng for further analysis and documentation.
+
+
+4. Applying Filters and Analyzing Protocols
+a) DNS (Domain Name System)
+   * Filter Used: dns
+
+   * Purpose: DNS translates human-readable domain names (e.g., google.com) into IP addresses.
+
+   * Observation: I observed multiple DNS Standard Queries and Standard Query Responses. For example, a query for self.events.data.microsoft.com returned an IPv4/IPv6 address and CNAME records.
+
+   * Packet Details:
+
+      * Source: Local machine IP
+
+      * Destination: DNS resolver IP (e.g., 2406:...:1:2)
+
+      * Transport: UDP, Port 53
+
+
+b) TLS (Transport Layer Security)
+         * Filter Used: tls
+
+         * Purpose: TLS secures communications over a network by encrypting the application data.
+
+         * Observation: Captured multiple TLSv1.2 and TLSv1.3 sessions. Packets included Application Data and Encrypted Alerts, which indicate encrypted communication.
+
+         * Packet Details:
+
+            * Source Port: 443 (HTTPS)
+
+            * Destination Port: Ephemeral port from local machine
+
+            * Data is not visible because it is encrypted.
+
+
+c) ICMP (Internet Control Message Protocol)
+               * Filter Used: icmpv6 (IPv6 ping responses were captured)
+
+               * Purpose: ICMP is used for diagnostic purposes such as ping, to test reachability and measure round-trip time.
+
+               * Observation: Echo Request and Echo Reply packets corresponded to the ping google.com command.
+
+               * Packet Details:
+
+                  * ICMP Type: Echo (ping) request/reply
+
+                  * Hop limit: 128
+
+                  * Round-trip times matched those shown in the Command Prompt.
+
+
+Results / Observations
+                     * Successfully captured and analyzed DNS, TLS, and ICMP traffic using Wireshark.
+
+                     * DNS packets revealed queried domains and corresponding IP addresses.
+
+                     * TLS packets confirmed encrypted web sessions; payload content was not visible due to encryption.
+
+                     * ICMP packets verified network reachability and latency measurements.
+
+                     * The capture also contained other protocols such as TCP, ARP, and IPv6 neighbor discovery.
